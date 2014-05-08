@@ -1,5 +1,3 @@
-require 'pry'
-
 def consolidate_cart(cart:[])
 	cart.each_with_object({}) do |item, consolidated|
 		item_name = item.keys.first
