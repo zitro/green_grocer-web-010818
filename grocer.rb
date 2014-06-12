@@ -1,14 +1,12 @@
-require "debugger"
-
 def consolidate_cart(cart: [])
   container = {}
   cart.each do |item_hash|
     item_hash.each do |name, value_hash|
-      unless value_hash[:count]
-        value_hash[:count] = 0
+      unless container[name] 
+        container[name] = value_hash
+        container[name][:count] = 0
       end
-      value_hash[:count] += 1
-      container[name] = value_hash
+      container[name][:count] += 1
     end
   end
   container 
@@ -21,20 +19,17 @@ def apply_coupons(cart: [], coupons: [])
       if name == coupon_hash[:item] && item_hash[:count] >= coupon_hash[:num]
         item_hash[:count] = item_hash[:count] - coupon_hash[:num]
         new_name = coupon_hash[:item] + " w/coupon"
-        couponed_items[new_name] = { :price => coupon_hash[:cost], :count => 1, :clearance => :false }
-      end
+        couponed_items[new_name] = { :price => coupon_hash[:cost], 
+                                     :count => 1, 
+                                     :clearance => item_hash[:clearance] }
+      end 
     end
   end
   cart.merge(couponed_items)
-
-  #{
-  #  {"BEER"=>{:price=>13.0, :clearance=>false, :count=>-1}, 
-  #  {"BEER w/coupon"=>{:price=>20.0, :count=>2, :clearance=>:false}
-  #}
-
 end
 
 def checkout(cart: [], coupons: [])
+  puts cart.inspect
   call_later = cart
   cart = consolidate_cart(cart: cart)
   final_cart = apply_coupons(cart: cart, coupons: coupons)
@@ -48,7 +43,5 @@ def checkout(cart: [], coupons: [])
   if total > 100
     total = total - ( total * 0.10 )
   end
-  # debugger
-
   total
 end
