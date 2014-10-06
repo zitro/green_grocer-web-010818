@@ -44,22 +44,22 @@ describe "Grocer" do
           }
         }
         expect(result).to eq(expected_consolidated_cart)
+    end
+  end
+
+  describe "checkout" do
+    describe "using the consolidate_cart method during checkout" do
+      it "consolidates cart before calculation" do
+        beets = items.find { |item| item['BEETS'] }
+        cart = [beets]
+        result = consolidate_cart(cart: cart)
+
+        expect(self).to receive(:consolidate_cart).with(cart: cart).and_return(result)
+        expect(checkout(cart: cart, coupons: [])).to eq(2.50)
       end
     end
 
-    describe "checkout" do
-      describe "using the consolidate_cart method during checkout" do
-        it "consolidates cart before calculation" do
-          beets = items.find { |item| item['BEETS'] }
-          cart = [beets]
-          result = consolidate_cart(cart: cart)
-
-          expect(self).to receive(:consolidate_cart).with(cart: cart).and_return(result)
-          expect(checkout(cart: cart, coupons: [])).to eq(2.50)
-        end
-      end
-
-      it "adds 20% discount to items currently on clearance" do
+    it "adds 20% discount to items currently on clearance" do
       # Clearance item
       pb = items.find { |item| item['PEANUTBUTTER'] }
       cart = [pb]
@@ -97,7 +97,6 @@ describe "Grocer" do
 
       expect(checkout(cart: cart, coupons: coupons)).to eq(33.00)
     end
-
 
     it "only applies coupons that meet minimum amount" do
       beer = items.find { |item| item['BEER'] }

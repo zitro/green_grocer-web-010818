@@ -3,15 +3,16 @@ languages: ruby
 tags: collections, arrays, hashes, named parameters
 ---
 
-##Objectives: 
+## Objectives: 
+
 Create a checkout method to calculate the total cost of a cart of items and apply discounts and coupons as necessary.
 
 Dr. Steve Bruhle, your green grocer, isn't ready, but you are!
 
-##Skills: 
+## Skills: 
 any?, all?, none?, each, map/collect, named parameters
 
-##Instructions:
+## Instructions:
 
 Implement a method `checkout` to calculate total cost of a cart of items and apply discounts and coupons as necessary.
 
@@ -31,7 +32,6 @@ When checking out
 
 * If cart's total is over $100, apply 10% discount. Apply coupons first, then check total.
 
-
 ### Named Parameters
 
 The method signature for the checkout method is 
@@ -42,3 +42,4 @@ Named parameters give you more expressive code since you are specifying what eac
 
 ## Reward
 * [Dr. Brule](https://www.youtube.com/watch?v=-RuSCACXmXs)
+
