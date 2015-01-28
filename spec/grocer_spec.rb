@@ -187,21 +187,8 @@ describe "Grocer" do
       end
     end    
 
-    describe "clearance:" do
-      it "applies a 20% discount to items on clearance" do
-        cart = [find_item('PEANUTBUTTER')]
-        total_cost = checkout(cart: cart, coupons: [])
-        expect(total_cost).to eq(2.40)
-      end
-
-      it "applies a 20% discount to items on clearance but not to non-clearance items" do
-        cart = [find_item("BEETS"), find_item("PEANUTBUTTER")]
-        total_cost = checkout(cart: cart, coupons: [])
-        expect(total_cost).to eq(4.90)
-      end
-    end
-
     describe "coupons:" do
+
       it "considers coupons" do
         cheese = find_item('CHEESE')
         cart = Array.new(3, cheese)
@@ -229,6 +216,21 @@ describe "Grocer" do
         beer_coupon = find_coupon("BEER")
         coupons = [beer_coupon, beer_coupon]
         expect(checkout(cart: cart, coupons: coupons)).to eq(33.00)
+      end
+    end
+
+    describe "clearance:" do
+
+      it "applies a 20% discount to items on clearance" do
+        cart = [find_item('PEANUTBUTTER')]
+        total_cost = checkout(cart: cart, coupons: [])
+        expect(total_cost).to eq(2.40)
+      end
+
+      it "applies a 20% discount to items on clearance but not to non-clearance items" do
+        cart = [find_item("BEETS"), find_item("PEANUTBUTTER")]
+        total_cost = checkout(cart: cart, coupons: [])
+        expect(total_cost).to eq(4.90)
       end
     end
 
