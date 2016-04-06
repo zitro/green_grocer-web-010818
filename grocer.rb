@@ -1,4 +1,4 @@
-def consolidate_cart(cart:[])
+def consolidate_cart(cart)
   cart.each_with_object({}) do |item, result|
     item.each do |type, attributes|
       if result[type]
@@ -11,7 +11,7 @@ def consolidate_cart(cart:[])
   end
 end
 
-def apply_coupons(cart:[], coupons:[])
+def apply_coupons(cart, coupons)
   coupons.each do |coupon|
     name = coupon[:item]
     if cart[name] && cart[name][:count] >= coupon[:num]
@@ -27,7 +27,7 @@ def apply_coupons(cart:[], coupons:[])
   cart
 end
 
-def apply_clearance(cart:[])
+def apply_clearance(cart)
   cart.each do |name, properties|
     if properties[:clearance]
       updated_price = properties[:price] * 0.80
@@ -37,10 +37,10 @@ def apply_clearance(cart:[])
   cart
 end
 
-def checkout(cart: [], coupons: [])
-  consolidated_cart = consolidate_cart(cart: cart)
-  couponed_cart = apply_coupons(cart: consolidated_cart, coupons: coupons)
-  final_cart = apply_clearance(cart: couponed_cart)
+def checkout(cart, coupons)
+  consolidated_cart = consolidate_cart(cart)
+  couponed_cart = apply_coupons(consolidated_cart, coupons)
+  final_cart = apply_clearance(couponed_cart)
   total = 0
   final_cart.each do |name, properties|
     total += properties[:price] * properties[:count]
